@@ -1,1 +1,1 @@
-Macro scripts I use, with Imperium Maledictum in Foundry.
+Macro scripts I use with Imperium Maledictum in Foundry.
