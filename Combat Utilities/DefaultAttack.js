@@ -1,3 +1,4 @@
+// denote your preferred default attack with an asterisk
 const actor = canvas.tokens.controlled[0]?.actor;
 if (!actor) {
     ui.notifications.error("No token selected");
