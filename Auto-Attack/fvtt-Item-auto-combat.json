@@ -1,0 +1,152 @@
+{
+  "folder": "Dcbm71SVV9HLLWlm",
+  "name": "Auto-Combat",
+  "type": "trait",
+  "_id": "j6BaZs9wW871CgFj",
+  "img": "modules/impmal-core/assets/icons/blank.webp",
+  "system": {
+    "notes": {
+      "player": "",
+      "gm": ""
+    },
+    "attack": {
+      "type": "melee",
+      "characteristic": "",
+      "skill": {
+        "key": "",
+        "specialisation": ""
+      },
+      "damage": {
+        "SL": false,
+        "base": "",
+        "characteristic": "",
+        "ignoreAP": false
+      },
+      "range": "",
+      "traits": {
+        "list": []
+      },
+      "self": false
+    },
+    "test": {
+      "difficulty": "challenging",
+      "characteristic": "",
+      "skill": {
+        "key": "",
+        "specialisation": ""
+      },
+      "self": false
+    },
+    "roll": {
+      "enabled": false,
+      "formula": "",
+      "label": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Auto-Combat",
+      "img": "modules/impmal-core/assets/icons/blank.webp",
+      "_id": "7rX1yZnmTzAh7XVX",
+      "type": "base",
+      "system": {
+        "transferData": {
+          "type": "document",
+          "originalType": "document",
+          "documentType": "Actor",
+          "avoidTest": {
+            "value": "none",
+            "opposed": false,
+            "prevention": true,
+            "reversed": false,
+            "skill": {}
+          },
+          "testIndependent": false,
+          "equipTransfer": false,
+          "selfOnly": false,
+          "prompt": false,
+          "area": {
+            "templateData": {
+              "borderColor": null,
+              "fillColor": null,
+              "texture": null
+            },
+            "keep": false,
+            "aura": {
+              "transferred": false,
+              "render": false
+            },
+            "duration": "sustained"
+          },
+          "zone": {
+            "type": "zone",
+            "transferred": false,
+            "traits": {
+              "barrier": false,
+              "difficult": false,
+              "warpTouched": false
+            },
+            "skipImmediateOnPlacement": false,
+            "keep": false
+          }
+        },
+        "itemTargetData": {
+          "ids": [],
+          "allItems": false
+        },
+        "scriptData": [
+          {
+            "script": "// Auto-attack macro\nconst token = canvas.tokens.controlled[0];\nif (!token) {\n  ui.notifications.warn(\"Please select a token first.\");\n  return;\n}\n\n// Get player tokens\nconst playerTokens = canvas.tokens.placeables.filter(\n  (t) => t.actor && t.actor.hasPlayerOwner && !t.document.hidden\n);\n\nif (playerTokens.length === 0) {\n  ui.notifications.warn(\"No player tokens found.\");\n  return;\n}\n\n// Calculate nearest player\nconst nearest = playerTokens.reduce((closest, t) => {\n  if (t.id === token.id) return closest; // Skip self\n\n  const distance = canvas.grid.measureDistance(token.center, t.center);\n  return !closest || distance < closest.distance\n    ? { token: t, distance }\n    : closest;\n}, null);\n\nif (!nearest) {\n  ui.notifications.warn(\"No valid targets found.\");\n  return;\n}\n\n// Set target to closest player\nnearest.token.setTarget(true, { user: game.user, releaseOthers: true });\nui.notifications.info(`Targeting ${nearest.token.name}`);\n// Delay to make sure we have a target\nawait new Promise((resolve) => setTimeout(resolve, 100));\n// Execute the DefaultAttack macro, denoted by an asterisk on the attack, on  token's character sheet\nconst defaultAttackMacro = game.macros.getName(\"DefaultAttack\");\nif (defaultAttackMacro) {\n  await defaultAttackMacro.execute();\n} else {\n  ui.notifications.error(\"DefaultAttack macro not found.\");\n}",
+            "label": "Auto Combat Handler",
+            "trigger": "startTurn",
+            "options": {
+              "targeter": false,
+              "defending": false,
+              "deleteEffect": false
+            },
+            "async": false
+          }
+        ],
+        "zone": {
+          "type": "zone",
+          "traits": {},
+          "skipImmediateOnPlacement": false
+        },
+        "sourceData": {
+          "test": {}
+        },
+        "computed": false
+      },
+      "changes": [],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "impmal": {
+          "manualEffectKeys": false
+        }
+      },
+      "_stats": {
+        "coreVersion": "13.347",
+        "systemId": "impmal",
+        "systemVersion": "3.0.4",
+        "createdTime": 1755845707673,
+        "modifiedTime": 1756002487156,
+        "lastModifiedBy": "8LrEP6BLy4mizaxq"
+      }
+    }
+  ],
+}
