@@ -6,3 +6,6 @@ When using the AddtoActors macro, you may need to update the UUID used in the sc
 
 Denote each Token/NPC Template's "Default Attack" with an asterisk, i.e. "Piercing Claws*".
 
+NOTE: Auto-attack will not run on the first turn, though it will still target a player.
+
+
