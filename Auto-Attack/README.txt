@@ -3,3 +3,6 @@ NPC tokens will automatically target the nearest player token and roll a default
 Set up as a trait with the script effect named "Auto-Attack". The script effect should be triggering on the token's Start Turn. (See screenshot.)
 
 When using the AddtoActors macro, you may need to update the UUID used in the script to match your Auto-Attack trait's UUID.
+
+Denote each Token/NPC Template's "Default Attack" with an asterisk, i.e. "Piercing Claws*".
+
